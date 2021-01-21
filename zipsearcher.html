@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>郵便番号</title>
+</head>
+<body>
+    <form name="zipcodeform">
+        <p style="display:inline">郵便番号:</p>
+        <input type="text" id="searchzipcode" value=""/>
+        <input type="button" onclick="submitted()" value="検索">
+    </form>
+    <br>
+    <table border="1" style="border-collapse: collapse">
+        <thead><tr><th>郵便番号</th><th>都道府県名</th><th>市区町村名</th><th>町域名</th></tr></thead>
+        <tbody><tr><td id="zipcode"><br></td><td id="prefecture"><br></td><td id="town"><br></td><td id="address"><br></td></tbody>
+    </table>
+
+    <script language="javascript" type="text/javascript">
+        function submitted() {
+            var zipcode = document.getElementById("searchzipcode").value;
+            const url = "/?zipcode=" + zipcode;
+            fetch(url)
+            .then(response => response.json())
+            .then(data => setAddress(data));
+        }
+
+        function setAddress(data){
+            document.getElementById('zipcode').innerHTML = data["zipcode"];
+            document.getElementById('prefecture').innerHTML = data["prefecture"];
+            document.getElementById('town').innerHTML = data["town"];
+            document.getElementById('address').innerHTML = data["address"];
+        }
+    </script>
+
+</body>
+</html>
